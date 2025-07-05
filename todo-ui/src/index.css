@@ -1,0 +1,241 @@
+:root {
+  --primary: #2C4880;
+  --accent: #07D2FD;
+  --text-dark: #2C4880;
+  --text-light: #ffffff;
+  --bg-light: #f9fafb;
+  --border: #e5e7eb;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto; /* not scroll */
+  font-family: 'Nunito', sans-serif;
+  background-color: var(--bg-light);
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.navbar {
+  background-color: var(--primary);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+}
+
+.main {
+  display: flex;
+  padding: 2rem;
+  gap: 2rem;
+  flex: 1;
+  min-height: calc(100vh - 80px); /* leave room for navbar */
+}
+
+.card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  flex: 1;
+}
+
+button {
+  background: var(--accent);
+  border: none;
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #05b2d6;
+}
+
+.left-panel {
+  max-width: 400px;
+}
+
+.right-panel {
+  flex: 1;
+}
+
+.card-header {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.card-subtext {
+  font-size: 0.875rem;
+  color: #dbeafe;
+  font-weight: 400;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.stat-box {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.stat-pending {
+  background-color: #eef2ff;
+  color: var(--primary);
+  margin-right: 1rem;
+}
+
+.stat-completed {
+  background-color: #ecfdf5;
+  color: #16a34a;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  text-align: center;
+  height: 300px;
+}
+
+.empty-icon {
+  margin-bottom: 1rem;
+}
+
+.empty-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.add-task-button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-weight: bold;
+  color: white;
+  background: #07D2FD;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+.add-task-button:hover {
+  background: linear-gradient(to right, #0ca5e7, #07d2fd);
+}
+
+.task-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: #f3f6f9;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.task-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.task-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0 0 0.25rem 0;
+  color: #1e293b; /* dark slate */
+}
+
+.task-desc {
+  margin: 0;
+  color: #475569; /* slightly gray-blue */
+  font-size: 0.95rem;
+}
+
+@media (max-height: 700px) {
+  .main {
+    overflow-y: auto;
+  }
+}
+
+.checkbox-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.custom-checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border: 2px solid #9ca3af;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-checkbox:checked + .checkmark {
+  background-color: #07D2FD;
+  border-color: #07D2FD;
+}
+
+.custom-checkbox:checked + .checkmark::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 6px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
