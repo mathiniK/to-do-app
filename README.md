@@ -11,11 +11,12 @@ A fullstack ToDo application built with:
 - [Node.js (v18+)](https://nodejs.org/)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-# Run Tests
-dotnet test TodoApi.Tests
-
 # Ensure Docker Desktop is running
 docker-compose up --build
+
+# Run Tests
+docker build -f Dockerfile.test -t todoapi-tests .
+docker run --rm todoapi-tests
 
 # Manual Run (Without Docker)
 cd TodoApi
