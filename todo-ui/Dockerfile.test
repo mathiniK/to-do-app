@@ -1,0 +1,17 @@
+# Base image with Node
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install deps (for test only)
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Run tests
+CMD ["npm", "run", "test"]
