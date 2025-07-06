@@ -1,17 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TodoApi.Data;
-using TodoApi.Models;
+using TodoApi.Services;
+using TodoApi.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Register DbContext and Swagger
+// Configure Services
 builder.Services.AddDbContext<TodoContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ITaskService, TaskService>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Todo API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Todo API",
+        Version = "v1"
+    });
 });
 
 builder.Services.AddCors(options =>
@@ -26,59 +35,33 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Configure Middleware
 if (app.Environment.IsDevelopment())
-
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 
-// ✅ GET: latest 5 uncompleted tasks
-app.MapGet("/api/tasks", async (TodoContext db) =>
+if (!app.Environment.IsEnvironment("Docker"))
 {
-    var tasks = await db.Tasks
-        .Where(t => !t.IsCompleted)
-        .OrderByDescending(t => t.CreatedAt)
-        .Take(5)
-        .ToListAsync();
+    app.UseHttpsRedirection();
+}
 
-    return Results.Ok(tasks);
-})
-.WithName("GetTasks");
-
-// ✅ POST: create a new task
-app.MapPost("/api/tasks", async (TaskItem task, TodoContext db) =>
+// Apply Database Migration
+using (var scope = app.Services.CreateScope())
 {
-    if (task == null || string.IsNullOrWhiteSpace(task.Title))
-        return Results.BadRequest("Task title is required.");
+    var db = scope.ServiceProvider.GetRequiredService<TodoContext>();
+    if (db.Database.IsRelational())
+    {
+        db.Database.Migrate();
+    }
+}
 
-    task.CreatedAt = DateTime.UtcNow; // Explicitly set to the current UTC time
-
-    db.Tasks.Add(task);
-    await db.SaveChangesAsync();
-
-    return Results.Created($"/api/tasks/{task.Id}", task);
-})
-.WithName("CreateTask");
-
-// ✅ PATCH: mark a task as completed
-app.MapPatch("/api/tasks/{id}/done", async (int id, TodoContext db) =>
-{
-    var task = await db.Tasks.FindAsync(id);
-    if (task is null)
-        return Results.NotFound();
-
-    task.IsCompleted = true;
-    await db.SaveChangesAsync();
-
-    return Results.NoContent();
-})
-.WithName("MarkTaskDone");
-
-// Root route
+// Map Endpoints
+app.MapTaskEndpoints(); 
 app.MapGet("/", () => "Todo API is running!");
 
 app.Run();
+public partial class Program { }

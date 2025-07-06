@@ -1,0 +1,16 @@
+# Use .NET SDK image
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS test
+
+# Set working directory
+WORKDIR /app
+
+# Copy all project files
+COPY . .
+
+# Restore dependencies for test project
+RUN dotnet restore TodoApi.Tests/TodoApi.Tests.csproj
+
+# Build the test project (and its dependencies)
+RUN dotnet build TodoApi.Tests/TodoApi.Tests.csproj -c Debug
+
+CMD ["dotnet", "test", "TodoApi.Tests/TodoApi.Tests.csproj", "-c", "Debug", "--verbosity", "normal"]
