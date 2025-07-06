@@ -15,27 +15,28 @@ A fullstack ToDo application built with:
 git clone https://github.com/mathiniK/to-do-app.git
   
 # Ensure Docker Desktop is running
-docker-compose up --build
+docker-compose up --build  
+
 This will:
-Build and run the backend on http://localhost:5044
-Run the frontend on http://localhost:5100
+Build and run the backend on http://localhost:5044  
+Run the frontend on http://localhost:5100  
 Set up PostgreSQL for the backend
 
 # Run Tests
 **Backend** (Inside the root directory)
-docker build -f Dockerfile.test -t todoapi-tests .  \
-docker run --rm todoapi-tests
+- docker build -f Dockerfile.test -t todoapi-tests . 
+- docker run --rm todoapi-tests
 
 **Frontend** (Inside the todo-ui)
-docker build -f Dockerfile.test -t todo-ui-test .  \
-docker run --rm todo-ui-test
+- docker build -f Dockerfile.test -t todo-ui-test . 
+- docker run --rm todo-ui-test
 
 # Manual Run (Without Docker)
-cd TodoApi
-dotnet run
+- cd TodoApi
+- dotnet run
 
-cd todo-ui
-npm install
-npm run dev
+- cd todo-ui
+- npm install
+- npm run dev
 
 **Author: Mathini Kamalanaathan**
