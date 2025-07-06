@@ -3,7 +3,9 @@
 A fullstack ToDo application built with:
 - Frontend: React + TypeScript + CSS + Vite (in `todo-ui`)
 - Backend: ASP.NET Core Web API (.NET 9) (in `TodoApi`)
-- Tests: xUnit-based unit/integration tests (in `TodoApi.Tests`)
+- Tests: xUnit-based unit/integration tests (in `TodoApi.Tests`) and uses Vitest and Testing Library for frontend unit test.
+
+
 - Containerization: Docker
 
 # Prerequisites
