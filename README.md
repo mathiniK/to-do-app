@@ -24,11 +24,11 @@ Run the frontend on http://localhost:5100<br />
 Set up PostgreSQL for the backend
 
 # Run Tests
-**Backend** (Inside the root directory)
+**Backend** (Inside the root directory)<br />
 docker build -f Dockerfile.test -t todoapi-tests . <br />
 docker run --rm todoapi-tests
 
-**Frontend** (Inside the todo-ui)
+**Frontend** (Inside the todo-ui)<br />
 docker build -f Dockerfile.test -t todo-ui-test .<br /> 
 docker run --rm todo-ui-test
 
